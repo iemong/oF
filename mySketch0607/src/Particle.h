@@ -6,28 +6,58 @@
 //
 //
 
-#ifndef __mySketch0607__Particle__
-#define __mySketch0607__Particle__
+#ifndef __mySketch0607_01__Particle__
+#define __mySketch0607_01__Particle__
 
 #include <iostream>
 #include "ofMain.h"
 
 class Particle{
 public:
-    void setup(ofVec3f _position, ofVec3f _velocity);
+    //コンストラクタ
+    Particle();
+    // 初期設定
+    void setup(ofVec2f position, ofVec2f velocity);
+    void setup(float positionX, float positionY, float velocityX, float velocityY);
+    // 力をリセット
     void resetForce();
-    void addForce(ofVec3f _force);
+    // 力を加える
+    void addForce(ofVec2f force);
+    void addForce(float forceX, float forceY);
+    // 力を更新
     void updateForce();
+    // 位置の更新
     void updatePos();
-    void checkBounds(float xmin, float ymin, float xmax, float ymax);
+    // 更新(位置と力)
+    void update();
+    // 画面からはみ出たらバウンドさせる
+    void bounceOffWalls();
+    // 描画
     void draw();
     
+    // 反発する力
+    void addRepulsionForce(float x, float y, float radius, float scale);
+    void addRepulsionForce(Particle &p, float radius, float scale);
     
-    ofVec3f position;
-    ofVec3f velocity;
-    ofVec3f force;
-    float friction = 0.01;
+    // 引きつけあう力
+    void addAttractionForce(float x, float y, float radius, float scale);
+    void addAttractionForce(Particle &p, float radius, float scale);
+    
+    // 時計回りにはたらく力
+    void addCounterClockwiseForce(Particle &p, float radius, float scale);
+    
+    // 位置ベクトルの配列
+    ofVec2f position;
+    // 速度ベクトルの配列
+    ofVec2f velocity;
+    // 力ベクトルの配列
+    ofVec2f force;
+    // 摩擦係数
+    float friction;
+    // パーティクルの半径
     float radius;
+    // 固定するかどうか
+    bool bFixed;
 };
 
 
@@ -36,4 +66,4 @@ public:
 
 
 
-#endif /* defined(__mySketch0607__Particle__) */
+#endif /* defined(__mySketch0607_01__Particle__) */
